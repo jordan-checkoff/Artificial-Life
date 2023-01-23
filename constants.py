@@ -1,7 +1,7 @@
 import numpy
 
 steps = 500
-sleep = 1/60
+sleep = 1/1000
 
 frontAmplitude = numpy.pi / 4
 frontFrequency = 10
