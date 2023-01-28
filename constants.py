@@ -12,3 +12,5 @@ backAmplitude = numpy.pi / 2
 backFrequency = 10
 backPhaseOffset = numpy.pi
 backMaxForce = 50
+
+numberOfGenerations = 10
