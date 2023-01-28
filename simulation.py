@@ -8,12 +8,12 @@ from robot import ROBOT
 
 class SIMULATION:
     
-    def __init__(self, direct):
+    def __init__(self, direct, brainID):
         self.physicsClient = p.connect(p.DIRECT) if direct == 'DIRECT' else p.connect(p.GUI)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.setGravity(0,0,-9.8)
         self.world = WORLD()
-        self.robot = ROBOT()
+        self.robot = ROBOT(brainID)
         self.directOrGUI = direct
 
     def __del__(self):

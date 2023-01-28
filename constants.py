@@ -13,4 +13,5 @@ backFrequency = 10
 backPhaseOffset = numpy.pi
 backMaxForce = 50
 
-numberOfGenerations = 10
+numberOfGenerations = 20
+populationSize = 50
