@@ -29,10 +29,12 @@ class HILL_CLIMBER:
         # print(self.child.weights)
 
     def Select(self):
-        if self.parent.fitness > self.child.fitness:
+        # print(self.parent.fitness < self.child.fitness)
+        if self.parent.fitness < self.child.fitness:
             self.parent = self.child
 
     def Print(self):
+        # print('aaaa')
         print(self.parent.fitness, self.child.fitness)
 
     def Show_Best(self):

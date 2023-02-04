@@ -27,6 +27,8 @@ class SIMULATION:
             self.robot.Think()
             self.robot.Act(t)
 
+            self.robot.Get_Current_Fitness()
+
             if self.directOrGUI == 'GUI':
                 time.sleep(c.sleep)
 
