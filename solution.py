@@ -36,7 +36,6 @@ class SOLUTION:
         pyrosim.Start_URDF("body.urdf")
         pyrosim.Send_Cube(name="Torso", pos=[0,0,0.5], size=[2,0.5,0.5])
 
-        pyrosim.Send_Joint( name = "Torso_FrontLeg" , parent= "Torso" , child = "FrontLeg" , type = "revolute", position = [0,0.5,1], jointAxis = "1 0 0")
         pyrosim.Send_Joint( name = "Torso_FrontLeftLeg" , parent= "Torso" , child = "FrontLeftLeg" , type = "revolute", position = [-0.5,-0.25,0.5], jointAxis = "1 0 0")
         pyrosim.Send_Cube(name="FrontLeftLeg", pos=[0,-0.25,0], size=[0.2,0.5,0.2])
         pyrosim.Send_Joint( name = "Torso_MiddleLeftLeg" , parent= "Torso" , child = "MiddleLeftLeg" , type = "revolute", position = [0,-0.25,0.5], jointAxis = "1 0 0")
