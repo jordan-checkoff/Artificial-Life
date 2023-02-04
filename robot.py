@@ -46,6 +46,7 @@ class ROBOT:
         # self.nn.Print()
 
     def Get_Current_Fitness(self):
+        # print(pyrosim.Get_Touch_Sensor_Value_For_Link('Torso'))
         for sensor in self.sensors:
             if not sensor == 'Torso' and pyrosim.Get_Touch_Sensor_Value_For_Link(sensor) == 1:
                 self.current = 0
