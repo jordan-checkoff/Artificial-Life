@@ -13,9 +13,9 @@ My simulator creates creatures with the following neural networks:
 * There is a synapse with a randomly generated weight connecting each sensor neuron to each motor neuron
 
 ## Method
-In order to randomly design a creature without any overlapping links, I created a Tree class and a Node class to first represent the creature's morphology with a tree, where each node represents one of the creature's links. This allowed me to develop a random hierarchy of parent-child relationships, which worked nicely with the parent-child relationships of pyrosim's joints. Once complete, I iterated over the tree to add in each link, joint and neuron. This is represented in the following diagram.
+In order to randomly design a creature without any overlapping links, I created a Tree class and a Node class to first represent the creature's morphology with a tree, where each node represents one of the creature's links. This allowed me to develop a random hierarchy of parent-child relationships, which worked nicely with the parent-child relationships of pyrosim's joints. Once complete, I iterated over the tree to add in each link, joint and neuron. This is represented in the following diagram:
 
-![alt text](/diagram.png)
+<img src="diagram.png" width="50%">
 
 ### Creating the tree representation
 Upon initialization, the Tree class randomly generates a tree for representing the creature's morphology using the following algorithm:
