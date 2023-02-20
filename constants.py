@@ -1,7 +1,7 @@
 import numpy
 
-steps = 500
-sleep = 1/1000
+steps = 1000
+sleep = 1/500
 
 frontAmplitude = numpy.pi / 4
 frontFrequency = 10
@@ -19,4 +19,4 @@ populationSize = 1
 numSensorNeurons = 13
 numMotorNeurons = 12
 
-motorJointRange = 1
+motorJointRange = 0.25
