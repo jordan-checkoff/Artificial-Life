@@ -1,20 +1,16 @@
 pybullet build time: Jan  7 2023 19:18:40
-Version = 4.1 INTEL-18.3.5
-Vendor = Intel Inc.
-Renderer = Intel(R) HD Graphics 6000
-b3Printf: Selected demo: Physics Server
-startThreads creating 1 threads.
-starting thread 0
-started thread 0 
-MotionThreadFunc thread started
-b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
-
-b3Printf: expected a world element, continuing without it.
-numActiveThreads = 0
-stopping threads
-destroy semaphore
-semaphore destroyed
-Thread with taskId 0 exiting
-Thread TERMINATED
-destroy main semaphore
-main semaphore destroyed
+b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+expected a world element, continuing without it.Traceback (most recent call last):
+  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/simulate.py", line 8, in <module>
+    simulation.Run()
+  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/simulation.py", line 28, in Run
+    self.robot.Think()
+  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/robot.py", line 43, in Think
+    self.nn.Update()
+  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/pyrosim/neuralNetwork.py", line 34, in Update
+    self.neurons[neuron].Update_Sensor_Neuron()
+  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/pyrosim/neuron.py", line 70, in Update_Sensor_Neuron
+    self.Set_Value(pyrosim.Get_Touch_Sensor_Value_For_Link(self.Get_Link_Name()))
+  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/pyrosim/pyrosim.py", line 49, in Get_Touch_Sensor_Value_For_Link
+    desiredLinkIndex = linkNamesToIndices[linkName]
+KeyError: '7'

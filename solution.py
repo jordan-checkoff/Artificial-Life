@@ -11,6 +11,8 @@ class SOLUTION:
 
     def __init__(self, ID):
         self.myID = ID
+        self.tree = TREE()
+
 
     def Start_Simulation(self, method):
         # self.Create_World()
@@ -33,7 +35,6 @@ class SOLUTION:
         pyrosim.End()
 
     def Generate_Body(self):
-        self.tree = TREE()
         self.tree.construct_body()
 
 
@@ -41,9 +42,7 @@ class SOLUTION:
         self.tree.construct_brain(self.myID)
 
     def Mutate(self):
-        randomRow = random.randint(0, c.numSensorNeurons - 1)
-        randomColumn = random.randint(0, c.numMotorNeurons - 1)
-        self.weights[randomRow, randomColumn] = random.random() * 2 - 1
+        self.tree.update_weights()
 
     def Set_ID(self, ID):
         self.myID = ID

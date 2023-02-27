@@ -1,5 +1,5 @@
 from node import NODE
-from random import randint
+from random import randint, random
 import pyrosim.pyrosim as pyrosim
 import numpy
 
@@ -19,10 +19,16 @@ class TREE:
                 newnode.delete()
                 newnode = NODE(i, parent)
             self.nodes.append(newnode)
+        self.num_sensor_neurons = len([node.name for node in self.nodes if node.is_sensor])
+        self.weights = numpy.random.rand(self.num_sensor_neurons, self.num_nodes) * 2 - 1
+        self.axes = numpy.random.randint(0, 2, size=6)
+
+    def update_weights(self):
+        self.weights[randint(0,self.num_sensor_neurons - 1)] = random() * 2 - 1
 
     def construct_body(self):
         pyrosim.Start_URDF("body.urdf")
-        construct_helper(self.root, [0,0,0])
+        construct_helper(self.root, [0,0,0], self.axes)
         pyrosim.End()
 
     def overlaps(self, newnode):
@@ -43,8 +49,6 @@ class TREE:
 
         self.add_motor_neurons(self.root)
 
-        self.weights = numpy.random.rand(len(sensor_neurons), self.num_nodes) * 2 - 1
-
         for currentRow in range(len(sensor_neurons)):
             for currentColumn in range(self.num_nodes):
                 pyrosim.Send_Synapse( sourceNeuronName = currentRow, targetNeuronName = currentColumn + len(sensor_neurons), weight = self.weights[currentRow][currentColumn] )
@@ -64,7 +68,7 @@ class TREE:
                 self.add_motor_neurons(node.attachments[i])
 
 
-def construct_helper(node, reference):
+def construct_helper(node, reference, axes):
     color = [0,1,0,1, "sensor"] if node.is_sensor == 1 else [0, 1, 1, 1, "not"]
     pyrosim.Send_Cube(name=f"{node.name}", pos=node.get_relative_position(reference), size=node.size, color=color)
     for i in range(6):
@@ -74,6 +78,6 @@ def construct_helper(node, reference):
             child = node.attachments[i]
             relative_joint_position = node.get_relative_joint_position(i, reference)
             absolute_joint_position = node.get_absolute_joint_position(i)
-            axis = ["1 0 0", "0 1 0", "0 0 1"][randint(0,2)]
+            axis = ["1 0 0", "0 1 0", "0 0 1"][axes[i]]
             pyrosim.Send_Joint( name = f"{node.name}_{child.name}" , parent= f"{node.name}" , child = f"{child.name}" , type = "revolute", position = relative_joint_position, jointAxis = axis)
-            construct_helper(child, absolute_joint_position)
+            construct_helper(child, absolute_joint_position, axes)
