@@ -36,7 +36,8 @@ Once the tree is complete, the body and brain can be created with pyrosim using 
 4. To add the synapses, call Send_Synapse for each pair of sensor and motor neurons
 
 ## Random Evolution of Creatures
-Each creature can be mutated in one of three ways:
+### Method
+Each creature could be mutated in one of three ways:
 1. Updating the weight of a single synapse between a motor neuron and a sensor neuron
 2. Adding a random link
 3. Removing a random link
@@ -44,6 +45,9 @@ Each creature can be mutated in one of three ways:
 In order to select which of these mutation would occur, a random integer was chosen between 0 and 5. If 0 was selected, a random link was deleted. If 1 was selected, a random link was added. For any other numbers, a random synapse weight was updated. This produced a 16.7% chance of a node being added, a 16.7% chance of a node being deleted, and a 66.7% chance of a random weight being updated. This process is outlined in the following diagram:
 
 <img src="evolve.png" width="50%">
+
+### Fitness
+Fitness was measured by calculating the distance that the creature travelled in the +x direction at the end of the simulation. Creatures who travelled further in the +x direction were favored.
 
 ## Sources
 This project was developed with the help of the Ludobots course on reddit: https://www.reddit.com/r/ludobots/
