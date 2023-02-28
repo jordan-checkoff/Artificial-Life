@@ -10,15 +10,14 @@ from motor import MOTOR
 class ROBOT:
     
     def __init__(self, brainID):
-        self.robotId = p.loadURDF("body.urdf")
+        self.robotId = p.loadURDF(f"body{brainID}.urdf")
         pyrosim.Prepare_To_Simulate(self.robotId)
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
         self.nn = NEURAL_NETWORK(f"brain{brainID}.nndf")
-        os.system(f"rm brain{brainID}.nndf")
+        # os.system(f"rm body{brainID}.urdf")
+        # os.system(f"rm brain{brainID}.nndf")
         self.brainID = brainID
-        self.fitness = 0
-        self.current = 0
 
     def Prepare_To_Sense(self):
         self.sensors = {}
@@ -45,24 +44,11 @@ class ROBOT:
         self.nn.Update()
         # self.nn.Print()
 
-    def Get_Current_Fitness(self):
-        # print(pyrosim.Get_Touch_Sensor_Value_For_Link('Torso'))
-        for sensor in self.sensors:
-            if not sensor == 'Torso' and pyrosim.Get_Touch_Sensor_Value_For_Link(sensor) == 1:
-                self.current = 0
-                return
-
-        self.current += 1
-        if self.current > self.fitness:
-            self.fitness = self.current
-
-        # basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
-        # basePosition = basePositionAndOrientation[0]
-        # if (basePosition[2] > self.fitness):
-        #     self.fitness = basePosition[2]
-
     def Get_Fitness(self):
+        basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
+        basePosition = basePositionAndOrientation[0]
+        xPosition = basePosition[0]
         f = open(f"tmp{self.brainID}.txt", "w")
-        f.write(str(self.fitness))
+        f.write(str(xPosition))
         f.close()
         os.system(f"mv tmp{self.brainID}.txt fitness{self.brainID}.txt")

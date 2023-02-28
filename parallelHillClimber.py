@@ -3,10 +3,12 @@ from solution import SOLUTION
 import constants as c
 import copy
 import os
+import re
 
 class PARALLEL_HILL_CLIMBER:
 
     def __init__(self):
+        os.system("rm body*.urdf")
         os.system("rm brain*.nndf")
         os.system("rm fitness*.txt")
         self.parents = {}
@@ -64,3 +66,9 @@ class PARALLEL_HILL_CLIMBER:
                 best = self.parents[i].fitness
                 index = i
         self.parents[index].Start_Simulation("GUI")
+        id = self.parents[index].myID
+        for file in os.listdir():
+            if re.search("^body.*urdf", file) and not file == f"body{id}.urdf":
+                os.system(f"rm {file}")
+            elif re.search("^brain.*nndf", file) and not file == f"brain{id}.nndf":
+                os.system(f"rm {file}")
