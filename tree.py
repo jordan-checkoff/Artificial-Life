@@ -7,8 +7,11 @@ class TREE:
 
     def __init__(self):
         self.root = NODE(0, None)
+        while self.root.is_underground():
+            self.root = NODE(0, None)
         self.nodes = [self.root]
         self.num_nodes = randint(5, 10)
+        self.next_node = self.num_nodes
         for i in range(1, self.num_nodes):
             rand = randint(0, i-1)
             parent = self.nodes[rand]
@@ -23,11 +26,44 @@ class TREE:
         self.weights = numpy.random.rand(self.num_sensor_neurons, self.num_nodes) * 2 - 1
         self.axes = numpy.random.randint(0, 2, size=6)
 
-    def update_weights(self):
-        self.weights[randint(0,self.num_sensor_neurons - 1)] = random() * 2 - 1
+    def add_node(self):
+        rand = randint(0, self.num_nodes - 1)
+        parent = self.nodes[rand]
+        while parent.full():
+            parent = self.nodes[randint(0, self.num_nodes - 1)]
+        newnode = NODE(self.next_node, parent)
+        while newnode.is_underground() and self.overlaps(newnode):
+            newnode.delete()
+            newnode = NODE(self.next_node, parent)
+        self.nodes.append(newnode)
+        self.next_node += 1
+        self.num_nodes += 1
+        if newnode.is_sensor:
+            self.num_sensor_neurons += 1
+            self.weights = numpy.append(self.weights, numpy.random.rand(1, self.num_nodes-1) * 2 - 1, axis=0)
+            self.weights = numpy.append(self.weights, numpy.random.rand(self.num_sensor_neurons, 1) * 2 - 1, axis=1)
+        else:
+            self.weights = numpy.append(self.weights, numpy.random.rand(self.num_sensor_neurons, 1) * 2 - 1, axis=1)
 
-    def construct_body(self):
-        pyrosim.Start_URDF("body.urdf")
+    def delete_node(self):
+        random_node = randint(0, self.num_nodes - 1)
+        while self.nodes[random_node].has_children() or self.nodes[random_node].is_root():
+            random_node = randint(0, self.num_nodes - 1)
+        sensor_pos = [node.name for node in self.nodes if node.is_sensor].index(self.nodes[random_node].name) if self.nodes[random_node].is_sensor else 0
+        self.nodes[random_node].delete()
+        done = self.nodes.pop(random_node)
+        self.num_nodes -= 1
+        if done.is_sensor:
+            self.num_sensor_neurons -= 1
+            self.weights = numpy.delete(self.weights, sensor_pos, 0)
+        self.weights = numpy.delete(self.weights, random_node, 1)
+
+
+    def update_weights(self):
+        self.weights[randint(0,self.num_sensor_neurons - 1), randint(0,self.num_nodes - 1)] = random() * 2 - 1
+
+    def construct_body(self, myId):
+        pyrosim.Start_URDF(f"body{myId}.urdf")
         construct_helper(self.root, [0,0,0], self.axes)
         pyrosim.End()
 

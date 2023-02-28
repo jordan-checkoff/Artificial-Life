@@ -1,16 +1,3 @@
 pybullet build time: Jan  7 2023 19:18:40
 b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
-expected a world element, continuing without it.Traceback (most recent call last):
-  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/simulate.py", line 8, in <module>
-    simulation.Run()
-  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/simulation.py", line 28, in Run
-    self.robot.Think()
-  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/robot.py", line 43, in Think
-    self.nn.Update()
-  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/pyrosim/neuralNetwork.py", line 34, in Update
-    self.neurons[neuron].Update_Sensor_Neuron()
-  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/pyrosim/neuron.py", line 70, in Update_Sensor_Neuron
-    self.Set_Value(pyrosim.Get_Touch_Sensor_Value_For_Link(self.Get_Link_Name()))
-  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/pyrosim/pyrosim.py", line 49, in Get_Touch_Sensor_Value_For_Link
-    desiredLinkIndex = linkNamesToIndices[linkName]
-KeyError: '7'
+expected a world element, continuing without it.

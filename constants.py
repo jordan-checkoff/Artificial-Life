@@ -13,8 +13,8 @@ backFrequency = 10
 backPhaseOffset = numpy.pi
 backMaxForce = 50
 
-numberOfGenerations = 10
-populationSize = 2
+numberOfGenerations = 30
+populationSize = 10
 
 numSensorNeurons = 13
 numMotorNeurons = 12

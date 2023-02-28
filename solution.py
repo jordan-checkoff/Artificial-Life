@@ -35,14 +35,20 @@ class SOLUTION:
         pyrosim.End()
 
     def Generate_Body(self):
-        self.tree.construct_body()
+        self.tree.construct_body(self.myID)
 
 
     def Generate_Brain(self):
         self.tree.construct_brain(self.myID)
 
     def Mutate(self):
-        self.tree.update_weights()
+        choice = random.randint(0,6)
+        if choice == 0 and len(self.tree.nodes) > 3:
+            self.tree.delete_node()
+        elif choice == 1:
+            self.tree.add_node()
+        else:
+            self.tree.update_weights()
 
     def Set_ID(self, ID):
         self.myID = ID

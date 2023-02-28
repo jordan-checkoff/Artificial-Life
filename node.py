@@ -10,6 +10,15 @@ class NODE:
         self.generate_position(parent)
         self.is_sensor = random.randint(0, 1)
 
+    def has_children(self):
+        count = 0
+        for attachment in self.attachments:
+            if attachment:
+                count += 1
+                if count == 2:
+                    return True
+        return False
+
     def full(self):
         if len(set(self.attachments)) == 1 and self.attachments[0]:
             return True
@@ -32,7 +41,7 @@ class NODE:
 
     def generate_position(self, parent):
         if parent == None:
-            self.pos = [0, 0, random.random()]
+            self.pos = [0, 0, random.random() * 2]
         elif self.parent_side == 0:
             self.pos = [parent.pos[0] - parent.size[0]/2 - self.size[0]/2, parent.pos[1], parent.pos[2]]
         elif self.parent_side == 1:
