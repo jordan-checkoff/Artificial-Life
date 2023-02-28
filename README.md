@@ -43,7 +43,7 @@ Each creature can be mutated in one of three ways:
 
 In order to select which of these mutation would occur, a random integer was chosen between 0 and 5. If 0 was selected, a random link was deleted. If 1 was selected, a random link was added. For any other numbers, a random synapse weight was updated. This produced a 16.7% chance of a node being added, a 16.7% chance of a node being deleted, and a 66.7% chance of a random weight being updated. This process is outlined in the following diagram:
 
-
+<img src="16.7% chance.png" width="50%">
 
 ## Sources
 This project was developed with the help of the Ludobots course on reddit: https://www.reddit.com/r/ludobots/
