@@ -10,11 +10,11 @@ from simulator.motor import MOTOR
 class ROBOT:
     
     def __init__(self, brainID):
-        self.robotId = p.loadURDF(f"body{brainID}.urdf")
+        self.robotId = p.loadURDF(f"creatures/body{brainID}_{c.seed}.urdf")
         pyrosim.Prepare_To_Simulate(self.robotId)
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
-        self.nn = NEURAL_NETWORK(f"brain{brainID}.nndf")
+        self.nn = NEURAL_NETWORK(f"creatures/brain{brainID}_{c.seed}.nndf")
         # os.system(f"rm body{brainID}.urdf")
         # os.system(f"rm brain{brainID}.nndf")
         self.brainID = brainID

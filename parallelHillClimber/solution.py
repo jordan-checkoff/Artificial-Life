@@ -5,14 +5,15 @@ import random
 import os
 import time
 import constants as c
-from tree import TREE
+from parallelHillClimber.tree import TREE
 
 class SOLUTION:
 
-    def __init__(self, ID):
+    def __init__(self, ID, gen):
         random.seed(c.seed)
         self.myID = ID
-        self.tree = TREE()
+        self.tree = TREE(ID, gen)
+        self.gen = 0
 
 
     def Start_Simulation(self, method):
@@ -53,3 +54,4 @@ class SOLUTION:
 
     def Set_ID(self, ID):
         self.myID = ID
+        self.tree.id = ID

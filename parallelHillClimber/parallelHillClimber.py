@@ -1,5 +1,5 @@
 
-from solution import SOLUTION
+from parallelHillClimber.solution import SOLUTION
 import constants as c
 import copy
 import os
@@ -8,35 +8,34 @@ import re
 class PARALLEL_HILL_CLIMBER:
 
     def __init__(self):
-        os.system("rm body*.urdf")
-        os.system("rm brain*.nndf")
+        os.system(f"rm creatures/body*_{c.seed}.urdf")
+        os.system(f"rm creatures/brain*_{c.seed}.nndf")
         os.system("rm fitness*.txt")
-        os.system("rm fitness_curve.txt")
+        os.system(f"rm fitness_curves/fitness_curve_{c.seed}.txt")
         self.parents = {}
         self.nextAvailableID = 0
         self.currGeneration = 0
         for i in range(c.populationSize):
-            self.parents[i] = SOLUTION(self.nextAvailableID)
+            self.parents[i] = SOLUTION(self.nextAvailableID, 0)
             self.nextAvailableID += 1
 
     def Evolve(self):
         self.Evaluate(self.parents)
         best = max([self.parents[i].fitness for i in self.parents])
-        f = open(f"fitness_curve.txt", "a")
+        f = open(f"fitness_curves/fitness_curve_{c.seed}.txt", "a")
         f.write(f"{self.currGeneration} {best}\n")
         f.close()
         self.currGeneration += 1
 
         for currentGeneration in range(c.numberOfGenerations):
-            print(currentGeneration)
-            self.Evolve_For_One_Generation()
+            self.Evolve_For_One_Generation(currentGeneration + 1)
 
-    def Evolve_For_One_Generation(self):
+    def Evolve_For_One_Generation(self, gen):
         self.Spawn()
         self.Mutate()
         self.Evaluate(self.children)
         self.Print()
-        self.Select()
+        self.Select(gen)
 
     def Spawn(self):
         self.children = {}
@@ -55,12 +54,13 @@ class PARALLEL_HILL_CLIMBER:
         for i in solutions:
             solutions[i].Wait_For_Simulation_To_End()
 
-    def Select(self):
+    def Select(self, gen):
         for i in self.parents:
             if self.parents[i].fitness < self.children[i].fitness:
                 self.parents[i] = self.children[i]
+            self.parents[i].tree.gen = gen
         best = max([self.parents[i].fitness for i in self.parents])
-        f = open(f"fitness_curve.txt", "a")
+        f = open(f"fitness_curves/fitness_curve_{c.seed}.txt", "a")
         f.write(f"{self.currGeneration} {best}\n")
         f.close()
         self.currGeneration += 1
@@ -80,9 +80,3 @@ class PARALLEL_HILL_CLIMBER:
                 index = i
         os.system("python simulate.py GUI 0")
         self.parents[index].Start_Simulation("GUI")
-        id = self.parents[index].myID
-        for file in os.listdir():
-            if re.search("^body.*urdf", file) and not file == f"body{id}.urdf" and not file == f"body0.urdf":
-                os.system(f"rm {file}")
-            elif re.search("^brain.*nndf", file) and not file == f"brain{id}.nndf" and not file == f"brain0.nndf":
-                os.system(f"rm {file}")

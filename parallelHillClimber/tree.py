@@ -1,12 +1,15 @@
-from node import NODE
+from parallelHillClimber.node import NODE
 from random import randint, random, seed
 import pyrosim.pyrosim as pyrosim
 import numpy
 import constants as c
+import os
 
 class TREE:
 
-    def __init__(self):
+    def __init__(self, ID, gen):
+        self.gen = gen
+        self.id = ID
         self.rng = numpy.random.default_rng(c.seed)
         seed(c.seed)
         self.root = NODE(0, None)
@@ -28,6 +31,11 @@ class TREE:
         self.num_sensor_neurons = len([node.name for node in self.nodes if node.is_sensor])
         self.weights = self.rng.random(size=(self.num_sensor_neurons, self.num_nodes)) * 2 - 1
         self.axes = self.rng.integers(0, 2, size=6, endpoint=True)
+
+    def __del__(self):
+        if not (self.gen == 0 or self.gen == c.numberOfGenerations):
+            os.system(f"rm creatures/body{self.id}_{c.seed}.urdf")
+            os.system(f"rm creatures/brain{self.id}_{c.seed}.nndf")
 
     def add_node(self):
         rand = randint(0, self.num_nodes - 1)
@@ -66,7 +74,7 @@ class TREE:
         self.weights[randint(0,self.num_sensor_neurons - 1), randint(0,self.num_nodes - 1)] = random() * 2 - 1
 
     def construct_body(self, myId):
-        pyrosim.Start_URDF(f"body{myId}.urdf")
+        pyrosim.Start_URDF(f"creatures/body{myId}_{c.seed}.urdf")
         construct_helper(self.root, [0,0,0], self.axes)
         pyrosim.End()
 
@@ -77,7 +85,7 @@ class TREE:
         return False
     
     def construct_brain(self, myId):
-        pyrosim.Start_NeuralNetwork(f"brain{myId}.nndf")
+        pyrosim.Start_NeuralNetwork(f"creatures/brain{myId}_{c.seed}.nndf")
         sensor_neurons = [node.name for node in self.nodes if node.is_sensor]
 
         self.i = 0

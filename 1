@@ -10,27 +10,11 @@ MotionThreadFunc thread started
 b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
 
 b3Printf: expected a world element, continuing without it.
-Traceback (most recent call last):
-  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/simulate.py", line 8, in <module>
-    simulation.Run()
-  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/simulator/simulation.py", line 27, in Run
-    self.robot.Sense(t)
-  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/simulator/robot.py", line 29, in Sense
-    self.sensors[sensor].Get_Value(t)
-  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/simulator/sensor.py", line 12, in Get_Value
-    self.values[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
-  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/pyrosim/pyrosim.py", line 53, in Get_Touch_Sensor_Value_For_Link
-    for pt in pts:
-TypeError: 'NoneType' object is not iterable
-Exception ignored in: <function SIMULATION.__del__ at 0x7fad13c66f70>
-Traceback (most recent call last):
-  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/simulator/simulation.py", line 21, in __del__
-pybullet.error: Not connected to physics server.
 numActiveThreads = 0
 stopping threads
-destroy semaphore
 Thread with taskId 0 exiting
 Thread TERMINATED
+destroy semaphore
 semaphore destroyed
 destroy main semaphore
 main semaphore destroyed
