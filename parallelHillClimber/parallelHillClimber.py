@@ -11,14 +11,22 @@ class PARALLEL_HILL_CLIMBER:
         os.system("rm body*.urdf")
         os.system("rm brain*.nndf")
         os.system("rm fitness*.txt")
+        os.system("rm fitness_curve.txt")
         self.parents = {}
         self.nextAvailableID = 0
+        self.currGeneration = 0
         for i in range(c.populationSize):
             self.parents[i] = SOLUTION(self.nextAvailableID)
             self.nextAvailableID += 1
 
     def Evolve(self):
         self.Evaluate(self.parents)
+        best = max([self.parents[i].fitness for i in self.parents])
+        f = open(f"fitness_curve.txt", "a")
+        f.write(f"{self.currGeneration} {best}\n")
+        f.close()
+        self.currGeneration += 1
+
         for currentGeneration in range(c.numberOfGenerations):
             print(currentGeneration)
             self.Evolve_For_One_Generation()
@@ -51,6 +59,11 @@ class PARALLEL_HILL_CLIMBER:
         for i in self.parents:
             if self.parents[i].fitness < self.children[i].fitness:
                 self.parents[i] = self.children[i]
+        best = max([self.parents[i].fitness for i in self.parents])
+        f = open(f"fitness_curve.txt", "a")
+        f.write(f"{self.currGeneration} {best}\n")
+        f.close()
+        self.currGeneration += 1
 
     def Print(self):
         print("\n")
@@ -65,10 +78,11 @@ class PARALLEL_HILL_CLIMBER:
             if self.parents[i].fitness > best:
                 best = self.parents[i].fitness
                 index = i
+        os.system("python simulate.py GUI 0")
         self.parents[index].Start_Simulation("GUI")
         id = self.parents[index].myID
         for file in os.listdir():
-            if re.search("^body.*urdf", file) and not file == f"body{id}.urdf":
+            if re.search("^body.*urdf", file) and not file == f"body{id}.urdf" and not file == f"body0.urdf":
                 os.system(f"rm {file}")
-            elif re.search("^brain.*nndf", file) and not file == f"brain{id}.nndf":
+            elif re.search("^brain.*nndf", file) and not file == f"brain{id}.nndf" and not file == f"brain0.nndf":
                 os.system(f"rm {file}")

@@ -4,8 +4,8 @@ import constants as c
 from pyrosim.neuralNetwork import NEURAL_NETWORK
 import os
 
-from sensor import SENSOR
-from motor import MOTOR
+from simulator.sensor import SENSOR
+from simulator.motor import MOTOR
 
 class ROBOT:
     

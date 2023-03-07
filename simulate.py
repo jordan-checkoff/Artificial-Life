@@ -1,4 +1,4 @@
-from simulation import SIMULATION
+from simulator.simulation import SIMULATION
 import sys
 
 directOrGUI = sys.argv[1]

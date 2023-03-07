@@ -41,7 +41,7 @@ class NODE:
 
     def generate_position(self, parent):
         if parent == None:
-            self.pos = [0, 0, random.random() * 2]
+            self.pos = [0, 0, random.random()]
         elif self.parent_side == 0:
             self.pos = [parent.pos[0] - parent.size[0]/2 - self.size[0]/2, parent.pos[1], parent.pos[2]]
         elif self.parent_side == 1:

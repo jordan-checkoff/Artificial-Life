@@ -10,6 +10,7 @@ from tree import TREE
 class SOLUTION:
 
     def __init__(self, ID):
+        random.seed(c.seed)
         self.myID = ID
         self.tree = TREE()
 

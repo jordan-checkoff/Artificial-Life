@@ -1,11 +1,14 @@
 from node import NODE
-from random import randint, random
+from random import randint, random, seed
 import pyrosim.pyrosim as pyrosim
 import numpy
+import constants as c
 
 class TREE:
 
     def __init__(self):
+        self.rng = numpy.random.default_rng(c.seed)
+        seed(c.seed)
         self.root = NODE(0, None)
         while self.root.is_underground():
             self.root = NODE(0, None)
@@ -18,13 +21,13 @@ class TREE:
             while parent.full():
                 parent = self.nodes[randint(0, i-1)]
             newnode = NODE(i, parent)
-            while newnode.is_underground() and self.overlaps(newnode):
+            while newnode.is_underground() or self.overlaps(newnode):
                 newnode.delete()
                 newnode = NODE(i, parent)
             self.nodes.append(newnode)
         self.num_sensor_neurons = len([node.name for node in self.nodes if node.is_sensor])
-        self.weights = numpy.random.rand(self.num_sensor_neurons, self.num_nodes) * 2 - 1
-        self.axes = numpy.random.randint(0, 2, size=6)
+        self.weights = self.rng.random(size=(self.num_sensor_neurons, self.num_nodes)) * 2 - 1
+        self.axes = self.rng.integers(0, 2, size=6, endpoint=True)
 
     def add_node(self):
         rand = randint(0, self.num_nodes - 1)
@@ -40,10 +43,10 @@ class TREE:
         self.num_nodes += 1
         if newnode.is_sensor:
             self.num_sensor_neurons += 1
-            self.weights = numpy.append(self.weights, numpy.random.rand(1, self.num_nodes-1) * 2 - 1, axis=0)
-            self.weights = numpy.append(self.weights, numpy.random.rand(self.num_sensor_neurons, 1) * 2 - 1, axis=1)
+            self.weights = numpy.append(self.weights, self.rng.random(size=(1, self.num_nodes-1)) * 2 - 1, axis=0)
+            self.weights = numpy.append(self.weights, self.rng.random(size=(self.num_sensor_neurons, 1)) * 2 - 1, axis=1)
         else:
-            self.weights = numpy.append(self.weights, numpy.random.rand(self.num_sensor_neurons, 1) * 2 - 1, axis=1)
+            self.weights = numpy.append(self.weights, self.rng.random(size=(self.num_sensor_neurons, 1)) * 2 - 1, axis=1)
 
     def delete_node(self):
         random_node = randint(0, self.num_nodes - 1)

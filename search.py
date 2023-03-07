@@ -1,5 +1,5 @@
 import os
-from parallelHillClimber import PARALLEL_HILL_CLIMBER
+from parallelHillClimber.parallelHillClimber import PARALLEL_HILL_CLIMBER
 
 # for i in range(5):
 #     os.system("python3 generate.py")

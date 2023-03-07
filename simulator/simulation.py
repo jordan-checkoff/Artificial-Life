@@ -4,7 +4,7 @@ import time
 import constants as c
 
 from world import WORLD
-from robot import ROBOT
+from simulator.robot import ROBOT
 
 class SIMULATION:
     

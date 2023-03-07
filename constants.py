@@ -1,22 +1,14 @@
 import numpy
 
+# Simulation parameters
 steps = 1000
 sleep = 1/500
 
-frontAmplitude = numpy.pi / 4
-frontFrequency = 10
-frontPhaseOffset = numpy.pi
-frontMaxForce = 50
+# Evolution parameters
+numberOfGenerations = 2
+populationSize = 2
+seed = 1
 
-backAmplitude = numpy.pi / 2
-backFrequency = 10
-backPhaseOffset = numpy.pi
-backMaxForce = 50
-
-numberOfGenerations = 30
-populationSize = 10
-
-numSensorNeurons = 13
-numMotorNeurons = 12
-
+# Robot parameters
 motorJointRange = 0.25
+maxForce = 50
