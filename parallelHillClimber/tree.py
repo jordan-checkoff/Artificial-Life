@@ -7,45 +7,42 @@ import os
 
 class TREE:
 
-    def __init__(self, ID, gen):
-        self.gen = gen
+    def __init__(self, ID):
         self.id = ID
         self.rng = numpy.random.default_rng(c.seed)
         seed(c.seed)
-        self.root = NODE(0, None)
+        self.root = NODE(0, None, self.rng)
         while self.root.is_underground():
-            self.root = NODE(0, None)
+            self.root = NODE(0, None, self.rng)
         self.nodes = [self.root]
-        self.num_nodes = randint(5, 10)
+        self.num_nodes = randint(c.minLinks, c.maxLinks)
         self.next_node = self.num_nodes
         for i in range(1, self.num_nodes):
             rand = randint(0, i-1)
             parent = self.nodes[rand]
             while parent.full():
                 parent = self.nodes[randint(0, i-1)]
-            newnode = NODE(i, parent)
+            newnode = NODE(i, parent, self.rng)
             while newnode.is_underground() or self.overlaps(newnode):
                 newnode.delete()
-                newnode = NODE(i, parent)
+                newnode = NODE(i, parent, self.rng)
             self.nodes.append(newnode)
         self.num_sensor_neurons = len([node.name for node in self.nodes if node.is_sensor])
         self.weights = self.rng.random(size=(self.num_sensor_neurons, self.num_nodes)) * 2 - 1
-        self.axes = self.rng.integers(0, 2, size=6, endpoint=True)
 
     def __del__(self):
-        if not (self.gen == 0 or self.gen == c.numberOfGenerations):
-            os.system(f"rm creatures/body{self.id}_{c.seed}.urdf")
-            os.system(f"rm creatures/brain{self.id}_{c.seed}.nndf")
+        os.system(f"rm body{self.id}.urdf")
+        os.system(f"rm brain{self.id}.nndf")
 
     def add_node(self):
         rand = randint(0, self.num_nodes - 1)
         parent = self.nodes[rand]
         while parent.full():
             parent = self.nodes[randint(0, self.num_nodes - 1)]
-        newnode = NODE(self.next_node, parent)
-        while newnode.is_underground() and self.overlaps(newnode):
+        newnode = NODE(self.next_node, parent, self.rng)
+        while newnode.is_underground() or self.overlaps(newnode):
             newnode.delete()
-            newnode = NODE(self.next_node, parent)
+            newnode = NODE(self.next_node, parent, self.rng)
         self.nodes.append(newnode)
         self.next_node += 1
         self.num_nodes += 1
@@ -74,8 +71,8 @@ class TREE:
         self.weights[randint(0,self.num_sensor_neurons - 1), randint(0,self.num_nodes - 1)] = random() * 2 - 1
 
     def construct_body(self, myId):
-        pyrosim.Start_URDF(f"creatures/body{myId}_{c.seed}.urdf")
-        construct_helper(self.root, [0,0,0], self.axes)
+        pyrosim.Start_URDF(f"body{myId}.urdf")
+        construct_helper(self.root, [0,0,0])
         pyrosim.End()
 
     def overlaps(self, newnode):
@@ -85,7 +82,7 @@ class TREE:
         return False
     
     def construct_brain(self, myId):
-        pyrosim.Start_NeuralNetwork(f"creatures/brain{myId}_{c.seed}.nndf")
+        pyrosim.Start_NeuralNetwork(f"brain{myId}.nndf")
         sensor_neurons = [node.name for node in self.nodes if node.is_sensor]
 
         self.i = 0
@@ -115,7 +112,7 @@ class TREE:
                 self.add_motor_neurons(node.attachments[i])
 
 
-def construct_helper(node, reference, axes):
+def construct_helper(node, reference):
     color = [0,1,0,1, "sensor"] if node.is_sensor == 1 else [0, 1, 1, 1, "not"]
     pyrosim.Send_Cube(name=f"{node.name}", pos=node.get_relative_position(reference), size=node.size, color=color)
     for i in range(6):
@@ -125,6 +122,6 @@ def construct_helper(node, reference, axes):
             child = node.attachments[i]
             relative_joint_position = node.get_relative_joint_position(i, reference)
             absolute_joint_position = node.get_absolute_joint_position(i)
-            axis = ["1 0 0", "0 1 0", "0 0 1"][axes[i]]
+            axis = ["1 0 0", "0 1 0", "0 0 1"][node.axes[i]]
             pyrosim.Send_Joint( name = f"{node.name}_{child.name}" , parent= f"{node.name}" , child = f"{child.name}" , type = "revolute", position = relative_joint_position, jointAxis = axis)
-            construct_helper(child, absolute_joint_position, axes)
+            construct_helper(child, absolute_joint_position)

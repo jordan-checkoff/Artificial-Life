@@ -9,10 +9,10 @@ from parallelHillClimber.tree import TREE
 
 class SOLUTION:
 
-    def __init__(self, ID, gen):
+    def __init__(self, ID):
         random.seed(c.seed)
         self.myID = ID
-        self.tree = TREE(ID, gen)
+        self.tree = TREE(ID)
         self.gen = 0
 
 
@@ -45,9 +45,9 @@ class SOLUTION:
 
     def Mutate(self):
         choice = random.randint(0,6)
-        if choice == 0 and len(self.tree.nodes) > 3:
+        if choice == 0 and len(self.tree.nodes) > c.minLinks:
             self.tree.delete_node()
-        elif choice == 1:
+        elif choice == 1 and len(self.tree.nodes) < c.maxLinks:
             self.tree.add_node()
         else:
             self.tree.update_weights()

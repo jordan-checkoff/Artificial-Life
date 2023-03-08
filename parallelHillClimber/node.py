@@ -2,13 +2,14 @@ import random
 
 class NODE:
 
-    def __init__(self, name, parent):
+    def __init__(self, name, parent, rng):
         self.name = name
         self.size = [random.random(), random.random(), random.random()]
         self.attachments = [None] * 6
         self.add_link(parent)
         self.generate_position(parent)
         self.is_sensor = random.randint(0, 1)
+        self.axes = rng.integers(0, 2, size=6, endpoint=True)
 
     def has_children(self):
         count = 0
