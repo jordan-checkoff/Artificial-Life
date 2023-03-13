@@ -4,10 +4,14 @@ import constants as c
 import copy
 import os
 import re
+import random
+import numpy
 
 class PARALLEL_HILL_CLIMBER:
 
     def __init__(self):
+        random.seed(c.seed)
+        self.rng = numpy.random.default_rng(c.seed)
         os.system(f"rm body*.urdf")
         os.system(f"rm brain*.nndf")
         os.system("rm fitness*.txt")
@@ -15,7 +19,7 @@ class PARALLEL_HILL_CLIMBER:
         self.parents = {}
         self.nextAvailableID = 0
         for i in range(c.populationSize):
-            self.parents[i] = SOLUTION(self.nextAvailableID)
+            self.parents[i] = SOLUTION(self.nextAvailableID, self.rng)
             self.nextAvailableID += 1
 
     def Evolve(self):
@@ -26,8 +30,8 @@ class PARALLEL_HILL_CLIMBER:
         f.close()
 
         for i in self.parents:
-            os.system(f"cp body{self.parents[i].myID}.urdf creatures/body{c.seed}_{i}_{0}.nndf")
-            os.system(f"cp brain{self.parents[i].myID}.nndf creatures/brain{c.seed}_{i}_{0}.urdf")
+            os.system(f"cp body{self.parents[i].myID}.urdf creatures/body{c.seed}_{i}_{0}.urdf")
+            os.system(f"cp brain{self.parents[i].myID}.nndf creatures/brain{c.seed}_{i}_{0}.nndf")
 
         for currentGeneration in range(c.numberOfGenerations):
             print(currentGeneration + 1)

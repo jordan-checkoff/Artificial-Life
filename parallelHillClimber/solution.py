@@ -1,5 +1,3 @@
-
-import numpy
 import pyrosim.pyrosim as pyrosim
 import random
 import os
@@ -9,11 +7,11 @@ from parallelHillClimber.tree import TREE
 
 class SOLUTION:
 
-    def __init__(self, ID):
-        random.seed(c.seed)
+    def __init__(self, ID, rng):
         self.myID = ID
-        self.tree = TREE(ID)
+        self.tree = TREE(ID, rng)
         self.gen = 0
+        self.rng = rng
 
 
     def Start_Simulation(self, method):
@@ -49,8 +47,10 @@ class SOLUTION:
             self.tree.delete_node()
         elif choice == 1 and len(self.tree.nodes) < c.maxLinks:
             self.tree.add_node()
-        else:
+        elif self.tree.num_sensor_neurons > 0:
             self.tree.update_weights()
+        else:
+            self.tree.add_node()
 
     def Set_ID(self, ID):
         self.myID = ID

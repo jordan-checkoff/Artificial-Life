@@ -1,5 +1,5 @@
 from parallelHillClimber.node import NODE
-from random import randint, random, seed
+from random import randint, random
 import pyrosim.pyrosim as pyrosim
 import numpy
 import constants as c
@@ -7,10 +7,9 @@ import os
 
 class TREE:
 
-    def __init__(self, ID):
+    def __init__(self, ID, rng):
         self.id = ID
-        self.rng = numpy.random.default_rng(c.seed)
-        seed(c.seed)
+        self.rng = rng
         self.root = NODE(0, None, self.rng)
         while self.root.is_underground():
             self.root = NODE(0, None, self.rng)
