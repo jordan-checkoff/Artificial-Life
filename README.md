@@ -1,6 +1,36 @@
-# Artificial-Life
+# Restricting number of body units for locomotion optimization
 
-## Morphospace
+## Overview
+I wanted to see if restricting the number of body units would have an effect on the locomotive capabilities of randomly generated creatures.
+
+## Hypothesis
+I hypothesized that restricting the number of body units would improve the locomotive capabilities of randomly generated creatures because I thought that having more body parts would overcomplicate the creature and make any changes to the neural network less dramatic.
+
+## Method
+
+## Results
+
+## Conclusion
+
+## Simulator Overview
+
+### How to Run
+To generate and evolve a population of creatures, first edit any parameters in **constants.py**. For more details about each parameter view Parameters. Then, run `python search.py` to start the simulation.
+
+Once evolution is finished, you can watch any pickled simulation. Run `python review.py seed_num_gen`, where seed is the seed of the creature, num is the creature's number in the population, and gen is the generation. The generation must be one that was pickled. The creatures' files are stored in the **creatures** folder, so you can check for file names there.
+
+### Parameters
+* steps - number of steps
+* pickle - how often the simulations is pickled
+* numberOfGenerations - number of generations
+* populationSize - population size
+* seed - seed
+* minLinks - minimum number of links
+* maxLinks - maximum number of links
+* motorJointRange - motor-joint range
+* maxForce - max motor force.
+
+### Morphospace
 My simulator creates creatures with the following morphologies:
 * Each creature contains between 5-10 links
 * Each link is a rectangular prism with each dimension between 0-1 units
@@ -12,12 +42,12 @@ My simulator creates creatures with the following neural networks:
 * Every joint is a motor neuron
 * There is a synapse with a randomly generated weight connecting each sensor neuron to each motor neuron
 
-## Random Creature Generation
+### Random Creature Generation
 In order to randomly design a creature without any overlapping links, I created a Tree class and a Node class to first represent the creature's morphology with a tree, where each node represents one of the creature's links. This allowed me to develop a random hierarchy of parent-child relationships, which worked nicely with the parent-child relationships of pyrosim's joints. Once complete, I iterated over the tree to add in each link, joint and neuron. This is represented in the following diagram:
 
 <img src="diagram.png" width="50%">
 
-### Creating the tree representation
+#### Creating the tree representation
 Upon initialization, the Tree class randomly generates a tree for representing the creature's morphology using the following algorithm:
 1. The Tree creates a root node, which is initalized with a random position and size, and creates a list called self.nodes with it as the sole item.
 2. A random number between 5 and 10 is chosen for the number of additional nodes to add.
@@ -28,15 +58,15 @@ Upon initialization, the Tree class randomly generates a tree for representing t
 7. Add the new node to self.nodes.
 8. Repeat steps 3-7 based on the number selected in step 2.
 
-### Creating the body and brain from the tree representation
+#### Creating the body and brain from the tree representation
 Once the tree is complete, the body and brain can be created with pyrosim using the following algorithm:
 1. To add each link and join, call the Send_Cube function for the root node. For each child of the root node, use Send_Link to add the appropriate joint and repeat for that child.
 2. To add the sensor neurons, iterate over self.nodes. If the node is assigned to be a sensor neuron, call Send_Sensor_Neuron for the link reprsented by that node.
 3. To add the motor neurons, iterate over self.nodes. For all nodes, call Send_Motor_Neuron for the joint comprised of that node and its parent.
 4. To add the synapses, call Send_Synapse for each pair of sensor and motor neurons
 
-## Random Evolution of Creatures
-### Method
+### Random Evolution of Creatures
+#### Method
 Each creature could be mutated in one of three ways:
 1. Updating the weight of a single synapse between a motor neuron and a sensor neuron
 2. Adding a random link
@@ -46,7 +76,7 @@ In order to select which of these mutation would occur, a random integer was cho
 
 <img src="evolve.png" width="50%">
 
-### Fitness
+#### Fitness
 Fitness was measured by calculating the distance that the creature travelled in the +x direction at the end of the simulation. Creatures who travelled further in the +x direction were favored.
 
 ## Sources
