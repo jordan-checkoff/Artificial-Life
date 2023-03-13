@@ -1,0 +1,82 @@
+<robot name = "robot">
+    <link name="0">
+        <inertial>
+            <origin xyz="0 0 0.2450832964379267" rpy="0 0 0"/>
+            <mass value="1" />
+            <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0.2450832964379267" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.42051389776385595 0.6941232116393216 0.4608399124288942" />
+            </geometry>
+            <material name="sensor">
+                <color rgba="0 1 0 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.2450832964379267" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.42051389776385595 0.6941232116393216 0.4608399124288942" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="0_1" type="revolute">
+       <parent link="0"/>
+       <child  link="1"/>
+       <origin rpy="0 0 0" xyz="0 0 0.4755032526523738" />
+     <axis xyz="0 1 0"/>
+       <limit effort="0.0" lower="-3.14159" upper="3.14159" velocity="0.0"/>
+    </joint>
+    <link name="1">
+        <inertial>
+            <origin xyz="0 0 0.014047212662115949" rpy="0 0 0"/>
+            <mass value="1" />
+            <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0.014047212662115949" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.22444095779847395 0.1303658923482096 0.028094425324231898" />
+            </geometry>
+            <material name="sensor">
+                <color rgba="0 1 0 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.014047212662115949" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.22444095779847395 0.1303658923482096 0.028094425324231898" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="1_2" type="revolute">
+       <parent link="1"/>
+       <child  link="2"/>
+       <origin rpy="0 0 0" xyz="0 0 0.028094425324231898" />
+     <axis xyz="1 0 0"/>
+       <limit effort="0.0" lower="-3.14159" upper="3.14159" velocity="0.0"/>
+    </joint>
+    <link name="2">
+        <inertial>
+            <origin xyz="0 0 0.47131183517623676" rpy="0 0 0"/>
+            <mass value="1" />
+            <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0.47131183517623676" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.45414109241948253 0.700113361727769 0.9426236703524734" />
+            </geometry>
+            <material name="sensor">
+                <color rgba="0 1 0 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.47131183517623676" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.45414109241948253 0.700113361727769 0.9426236703524734" />
+            </geometry>
+        </collision>
+    </link>
+</robot>

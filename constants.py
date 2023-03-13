@@ -1,22 +1,16 @@
-import numpy
 
+# Simulation parameters
 steps = 1000
 sleep = 1/500
+pickle = 100
 
-frontAmplitude = numpy.pi / 4
-frontFrequency = 10
-frontPhaseOffset = numpy.pi
-frontMaxForce = 50
-
-backAmplitude = numpy.pi / 2
-backFrequency = 10
-backPhaseOffset = numpy.pi
-backMaxForce = 50
-
-numberOfGenerations = 30
+# Evolution parameters
+numberOfGenerations = 500
 populationSize = 10
+seed = 20
+minLinks = 3
+maxLinks = 10
 
-numSensorNeurons = 13
-numMotorNeurons = 12
-
+# Robot parameters
 motorJointRange = 0.25
+maxForce = 50

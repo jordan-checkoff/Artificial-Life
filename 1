@@ -1,3 +1,12 @@
 pybullet build time: Jan  7 2023 19:18:40
 b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
-expected a world element, continuing without it.
+expected a world element, continuing without it.b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,152]:
+URDF file 'body39.urdf' not found
+Traceback (most recent call last):
+  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/simulate.py", line 7, in <module>
+    simulation = SIMULATION(directOrGUI, solutionID)
+  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/simulator/simulation.py", line 17, in __init__
+    self.robot = ROBOT(brainID, path)
+  File "/Users/jordancheckoff/Documents/GitHub/Artificial-Life/simulator/robot.py", line 13, in __init__
+    self.robotId = p.loadURDF(f"{path}body{brainID}.urdf")
+pybullet.error: Cannot load URDF file.
