@@ -53,6 +53,17 @@ Fitness was measured by calculating the distance that the creature travelled in 
 
 ## Results
 
+<table>
+<tr>
+<td>
+<img src='charts/Fitness Curves - Restricted Body Size.png' />
+</td>
+<td>
+<img src='charts/Fitness Curves - Unrestricted Body Size.png' />
+</td>
+</tr>
+</table>
+
 ## Conclusion
 
 ## Run the Simulator
