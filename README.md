@@ -1,5 +1,11 @@
 # Restricting number of body units for locomotion optimization
 
+https://user-images.githubusercontent.com/26661796/225125749-c161e14d-963d-46e9-b382-50fe4f571b1a.mp4
+
+
+<img src="Teaser.gif" width="25%" />
+
+
 ## Overview
 After using PyroSim to build a simulator that can generate creatures with random bodies and brains, I felt that the morphospace was too large to evolve an optimal creature in an efficient time. So, I wanted to see if there were any limitations I could place on the morphospace that would have no effect on, or maybe even improve, the fitness of the evolved creatures. Finding such a limitation would decrease the number of possible creatures and so would allow more time for fine-tuning other traits of the creature. For my experiment, I decided to test whether or not restricting the number of body units of the creature would have an effect on its locomotive capabilities. I chose this as the limitation because I hypothesized that creatures with less body units would have better fitness because I thought that having more body parts would both overcomplicate the creature and make changes to the neural network less significant.
 
