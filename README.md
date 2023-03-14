@@ -105,11 +105,13 @@ T-test value: 0.1842313902
 
 
 ## Conclusion
+Figure 3 and its corresponding t-test show that there is no significant difference between the fitness of the restricted and unrestricted creatures. However, Figures 1, 2, and 4 show that there is a more significant difference between the fitness of the best restricted and unrestricted creatures. However, because the best creatures only make up 5 data points in each group, this result is not conclusive and requires further testing.
 
-## Run the Simulator
+This experiment provides evidence to support that restricting the number of body units successfuly limits the morphospace without impacting the fitness of the produced creatures. It also provides support that restricting the number of body units leads to the most fit creatures being more fit, but more testing is required.
 
-### How to Run
-To generate and evolve a population of creatures, first edit any parameters in **constants.py**. For more details about each parameter view Parameters. Then, run `python search.py` to start the simulation.
+## How to Run the Simulator
+
+To generate and evolve a population of creatures, first edit any parameters in **constants.py**. For more details about each parameter view the section below. Then, run `python search.py` to start the simulation.
 
 Once evolution is finished, you can watch any pickled simulation. Run `python review.py seed_num_gen`, where seed is the seed of the creature, num is the creature's number in the population, and gen is the generation. The generation must be one that was pickled. The creatures' files are stored in the **creatures** folder, so you can check for file names there.
 
