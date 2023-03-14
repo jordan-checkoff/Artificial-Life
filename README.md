@@ -62,7 +62,47 @@ Fitness was measured by calculating the distance that the creature travelled in 
 <img src='charts/Fitness Curves - Unrestricted Body Size.png' />
 </td>
 </tr>
+<tr>
+<td>
+<b>Figure 1</b>
+
+Highest fitness value among all 10 creatures at each generation for each "restricted creature" trial
+</td>
+<td>
+<b>Figure 2</b>
+
+Highest fitness value among all 10 creatures at each generation for each "unrestricted creature" trial
+</td>
+</tr>
 </table>
+
+<table>
+<tr>
+<td>
+<img src='charts/all.png' />
+</td>
+<td>
+<img src='charts/best.png' />
+</td>
+</tr>
+<tr>
+<td>
+<b>Figure 3</b>
+
+Final fitness for every creature
+
+T-test value: 0.9924988039
+</td>
+<td>
+<b>Figure 4</b>
+
+Final fitness for the best creature in each trial
+
+T-test value: 0.1842313902
+</td>
+</tr>
+</table>
+
 
 ## Conclusion
 
