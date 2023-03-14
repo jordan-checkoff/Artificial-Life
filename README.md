@@ -21,6 +21,8 @@ The simulator creates creatures with the following neural networks:
 ### Random Creature Generation
 In order to randomly design a creature without any overlapping links, I created a Tree class and a Node class to first represent the creature's morphology with a tree, where each node represents one of the creature's links. This allowed me to develop a random hierarchy of parent-child relationships, which worked nicely with the parent-child relationships of pyrosim's joints. Once complete, I iterated over the tree to add in each link, joint and neuron. This is represented in the following diagram:
 
+<img src="charts/Tree.png" width="75%" />
+
 #### Creating the tree representation
 Upon initialization, the Tree class randomly generates a tree for representing the creature's morphology using the following algorithm:
 1. The Tree creates a root node, which is initalized with a random position and size, and creates a list called self.nodes with it as the sole item.
@@ -47,6 +49,8 @@ Each creature could be mutated in one of three ways:
 3. Removing a random link
 
 In order to select which of these mutation would occur, a random integer was chosen between 0 and 5. If 0 was selected, a random link was deleted. If 1 was selected, a random link was added. For any other numbers, a random synapse weight was updated. This produced a 16.7% chance of a node being added, a 16.7% chance of a node being deleted, and a 66.7% chance of a random weight being updated. This process is outlined in the following diagram:
+
+<img src="charts/16.7%25%20chance.png" width="50%" />
 
 #### Fitness
 Fitness was measured by calculating the distance that the creature travelled in the +x direction at the end of the simulation. Creatures who travelled further in the +x direction were favored.
