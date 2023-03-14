@@ -1,51 +1,25 @@
 # Restricting number of body units for locomotion optimization
 
 ## Overview
-I wanted to see if restricting the number of body units would have an effect on the locomotive capabilities of randomly generated creatures.
+After using PyroSim to build a simulator that can generate creatures with random bodies and brains, I felt that the morphospace was too large to evolve an optimal creature in an efficient time. So, I wanted to see if there were any limitations I could place on the morphospace that would have no effect on, or maybe even improve, the fitness of the evolved creatures. Finding such a limitation would decrease the number of possible creatures and so would allow more time for fine-tuning other traits of the creature. For my experiment, I decided to test whether or not restricting the number of body units of the creature would have an effect on its locomotive capabilities. I chose this as the limitation because I hypothesized that creatures with less body units would have better fitness because I thought that having more body parts would both overcomplicate the creature and make changes to the neural network less significant.
 
-## Hypothesis
-I hypothesized that restricting the number of body units would improve the locomotive capabilities of randomly generated creatures because I thought that having more body parts would overcomplicate the creature and make any changes to the neural network less dramatic.
-
-## Method
-
-## Results
-
-## Conclusion
-
-## Simulator Overview
-
-### How to Run
-To generate and evolve a population of creatures, first edit any parameters in **constants.py**. For more details about each parameter view Parameters. Then, run `python search.py` to start the simulation.
-
-Once evolution is finished, you can watch any pickled simulation. Run `python review.py seed_num_gen`, where seed is the seed of the creature, num is the creature's number in the population, and gen is the generation. The generation must be one that was pickled. The creatures' files are stored in the **creatures** folder, so you can check for file names there.
-
-### Parameters
-* steps - number of steps
-* pickle - how often the simulations is pickled
-* numberOfGenerations - number of generations
-* populationSize - population size
-* seed - seed
-* minLinks - minimum number of links
-* maxLinks - maximum number of links
-* motorJointRange - motor-joint range
-* maxForce - max motor force.
+## Experimental Design
+To test how limiting the number of body units affects fitness, I ran two groups of trials: one with "unrestricted creatures" and one with "restricted creatures". Unrestricted creatures could have bodies made of 3-10 units, while restricted creatures were limited to 3-6 units. Creatures were generated with a number of body units within its allowed range, and were not allowed to mutate in such a way to leave that range. Each group consisted of 5 trials, where each trial tracked a random population of 10 creatures that evolved in parallel for 500 generations. The highest fitness at each timestep was recorded, as well as the final fitness of all the creatures.
 
 ### Morphospace
-My simulator creates creatures with the following morphologies:
-* Each creature contains between 5-10 links
+The simulator creates creatures with the following morphologies:
+* Each creature contains a number of links specified by its trial group
 * Each link is a rectangular prism with each dimension between 0-1 units
 * Each link can have at most one joint on each of its faces
 * Two links that connect at a joint do so at the center of two of their faces
 
-My simulator creates creatures with the following neural networks:
-* Links are randomly assigned as sensor neurons or not
-* Every joint is a motor neuron
+The simulator creates creatures with the following neural networks:
+* Links are randomly assigned as sensor neurons or non-sensor neurons
+* Every joint has a motor neuron
 * There is a synapse with a randomly generated weight connecting each sensor neuron to each motor neuron
 
 ### Random Creature Generation
 In order to randomly design a creature without any overlapping links, I created a Tree class and a Node class to first represent the creature's morphology with a tree, where each node represents one of the creature's links. This allowed me to develop a random hierarchy of parent-child relationships, which worked nicely with the parent-child relationships of pyrosim's joints. Once complete, I iterated over the tree to add in each link, joint and neuron. This is represented in the following diagram:
-
-<img src="diagram.png" width="50%">
 
 #### Creating the tree representation
 Upon initialization, the Tree class randomly generates a tree for representing the creature's morphology using the following algorithm:
@@ -74,10 +48,30 @@ Each creature could be mutated in one of three ways:
 
 In order to select which of these mutation would occur, a random integer was chosen between 0 and 5. If 0 was selected, a random link was deleted. If 1 was selected, a random link was added. For any other numbers, a random synapse weight was updated. This produced a 16.7% chance of a node being added, a 16.7% chance of a node being deleted, and a 66.7% chance of a random weight being updated. This process is outlined in the following diagram:
 
-<img src="evolve.png" width="50%">
-
 #### Fitness
 Fitness was measured by calculating the distance that the creature travelled in the +x direction at the end of the simulation. Creatures who travelled further in the +x direction were favored.
+
+## Results
+
+## Conclusion
+
+## Run the Simulator
+
+### How to Run
+To generate and evolve a population of creatures, first edit any parameters in **constants.py**. For more details about each parameter view Parameters. Then, run `python search.py` to start the simulation.
+
+Once evolution is finished, you can watch any pickled simulation. Run `python review.py seed_num_gen`, where seed is the seed of the creature, num is the creature's number in the population, and gen is the generation. The generation must be one that was pickled. The creatures' files are stored in the **creatures** folder, so you can check for file names there.
+
+### Parameters
+* steps - number of steps
+* pickle - how often the simulations is pickled
+* numberOfGenerations - number of generations
+* populationSize - population size
+* seed - seed
+* minLinks - minimum number of links
+* maxLinks - maximum number of links
+* motorJointRange - motor-joint range
+* maxForce - max motor force.
 
 ## Sources
 This project was developed with the help of the Ludobots course on reddit: https://www.reddit.com/r/ludobots/
